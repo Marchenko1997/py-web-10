@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить цитату{% endblock %}
+
+{% block content %}
+<h2>Добавить новую цитату</h2>
+<form method="post">
+    {% csrf_token %}
+
+    <label for="{{ form.text.id_for_label }}">Текст цитаты</label>
+    {{ form.text }}
+
+    <label for="{{ form.author.id_for_label }}">Автор</label>
+    {{ form.author }}
+
+    <label for="{{ form.tags.id_for_label }}">Теги (через запятую)</label>
+    {{ form.tags }}
+
+    <button type="submit" class="contrast">Сохранить</button>
+</form>
+{% endblock %}

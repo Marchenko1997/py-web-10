@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить автора{% endblock %}
+
+{% block content %}
+<h2>Добавить нового автора</h2>
+<form method="post">
+    {% csrf_token %}
+
+    <label for="{{ form.fullname.id_for_label }}">Полное имя</label>
+    {{ form.fullname }}
+
+    <label for="{{ form.born_date.id_for_label }}">Дата рождения</label>
+    {{ form.born_date }}
+
+    <label for="{{ form.born_location.id_for_label }}">Место рождения</label>
+    {{ form.born_location }}
+
+    <label for="{{ form.description.id_for_label }}">Описание</label>
+    {{ form.description }}
+
+    <button type="submit" class="contrast">Сохранить</button>
+</form>
+{% endblock %}

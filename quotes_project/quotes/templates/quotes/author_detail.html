@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ author.fullname }}{% endblock %}
+
+{% block content %}
+<article>
+    <h2>{{ author.fullname }}</h2>
+    <p><strong>Дата рождения:</strong> {{ author.born_date }}</p>
+    <p><strong>Место рождения:</strong> {{ author.born_location }}</p>
+    <p>{{ author.description }}</p>
+</article>
+
+<h3>Цитаты:</h3>
+<ul>
+    {% for quote in author.quote_set.all %}
+        <li>"{{ quote.text }}"</li>
+    {% empty %}
+        <li>Нет цитат.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

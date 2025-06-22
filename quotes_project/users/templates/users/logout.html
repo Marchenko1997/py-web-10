@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Выход{% endblock %}
+
+{% block content %}
+<article>
+    <p>Вы успешно вышли из аккаунта.</p>
+    <a href="{% url 'quotes:index' %}" role="button">На главную</a>
+</article>
+{% endblock %}
