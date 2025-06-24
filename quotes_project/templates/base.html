@@ -1,35 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
+  <head>
+    <meta charset="UTF-8" />
     <title>{% block title %}Quotes Site{% endblock %}</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
     {% load static %}
- 
-    <link rel="stylesheet" href="{% static 'quotes/style.css' %}">
-</head>
-<body>
-<main class="container">
 
- 
-    <nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
+    <link rel="stylesheet" href="{% static 'quotes/style.css' %}" />
+  </head>
+  <body>
+    <main class="container">
+      <nav
+        style="
+          margin-bottom: 20px;
+          border-bottom: 2px solid;
+          padding-left: 30px;
+        "
+      >
         <ul>
-            <li><a href="{% url 'quotes:index' %}" role="button">Главная</a></li>
+          <li><a href="{% url 'quotes:index' %}" role="button">Главная</a></li>
 
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'quotes:add_author' %}" role="button">Добавить автора</a></li>
-                <li><a href="{% url 'quotes:add_quote' %}" role="button">Добавить цитату</a></li>
-                <li><a href="{% url 'users:logout' %}" role="button" class="contrast">Выйти</a></li>
-            {% else %}
-                <li><a href="{% url 'users:login' %}" role="button">Войти</a></li>
-                <li><a href="{% url 'users:register' %}" role="button">Регистрация</a></li>
-            {% endif %}
+          {% if user.is_authenticated %}
+          <li>
+            <a href="{% url 'quotes:add_author' %}" role="button"
+              >Добавить автора</a
+            >
+          </li>
+          <li>
+            <a href="{% url 'quotes:add_quote' %}" role="button"
+              >Добавить цитату</a
+            >
+          </li>
+
+          <li>
+            <a href="{% url 'users:logout' %}" role="button" class="contrast"
+              >Выйти</a
+            >
+          </li>
+          <li>
+            <form
+              action="{% url 'quotes:run_scraper' %}"
+              method="post"
+              style="display: inline"
+            >
+              {% csrf_token %}
+              <button
+                type="submit"
+                role="button"
+                style="
+                  all: unset;
+                  cursor: pointer;
+                  color: #0d6efd;
+                  text-decoration: underline;
+                  padding: 0.5rem 1rem;
+                  display: inline-block;
+                "
+              >
+                Скрапить цитаты с quotes.toscrape.com
+              </button>
+            </form>
+          </li>
+          {% else %}
+          <li><a href="{% url 'users:login' %}" role="button">Войти</a></li>
+          <li>
+            <a href="{% url 'users:register' %}" role="button">Регистрация</a>
+          </li>
+          {% endif %}
         </ul>
-    </nav>
+      </nav>
 
-    {% block content %}{% endblock %}
-
-</main>
-</body>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
 </html>

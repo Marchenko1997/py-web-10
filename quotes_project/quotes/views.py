@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+
 from .models import Author, Quote, Tag
 from .forms import AuthorForm, QuoteForm
 from django.db.models import Count
 from django.core.paginator import Paginator
+from .utils.scraper import scrape_quotes
 
 
 def index(request):
@@ -52,3 +54,9 @@ def quotes_by_tag(request, tag_name):
     return render(
         request, "quotes/quotes_by_tag.html", {"quotes": quotes, "tag": tag_name}
     )
+
+
+def run_scraper(request):
+    if request.method == "POST":
+        scrape_quotes() 
+    return redirect("quotes:index")
