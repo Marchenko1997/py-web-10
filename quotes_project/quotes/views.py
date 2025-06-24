@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Author, Quote
+from .models import Author, Quote, Tag
 from .forms import AuthorForm, QuoteForm
+from django.db.models import Count
 
 
 def index(request):
     quotes = Quote.objects.all().order_by("author__fullname", "text")
-    return render(request, "quotes/index.html", {"quotes": quotes})
+
+    top_tags = Tag.objects.annotate(num_quotes= Count("quote")).order_by("-num_quotes")[:10]
+
+    return render(request, "quotes/index.html", {"quotes": quotes, "top_tags": top_tags})
 
 
 @login_required

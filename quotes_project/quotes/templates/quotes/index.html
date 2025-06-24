@@ -3,6 +3,15 @@
 {% block title %}Цитаты{% endblock %}
 
 {% block content %}
+<h2>Top 10 тегів</h2>
+<ul>
+    {% for tag in top_tags %}
+        <li>
+            <a href="{% url 'quotes:quotes_by_tag' tag.name %}">{{ tag.name }}</a>
+            ({{ tag.num_quotes }})
+        </li>
+    {% endfor %}
+</ul>
 <h1>Цитаты</h1>
 
 {% for quote in quotes %}
