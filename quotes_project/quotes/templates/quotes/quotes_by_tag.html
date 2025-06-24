@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Цитаты с тегом "{{ tag }}"{% endblock %}
+
+{% block content %}
+<h2>Цитаты с тегом: "{{ tag }}"</h2>
+
+{% for quote in quotes %}
+<article>
+    <blockquote>"{{ quote.text }}"</blockquote>
+    <footer>
+        — <a href="{% url 'quotes:author_detail' quote.author.id %}">{{ quote.author.fullname }}</a>
+    </footer>
+</article>
+{% empty %}
+<p>Нет цитат с этим тегом.</p>
+{% endfor %}
+{% endblock %}

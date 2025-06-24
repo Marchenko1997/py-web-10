@@ -11,6 +11,19 @@
     <footer>
         — <a href="{% url 'quotes:author_detail' quote.author.id %}">{{ quote.author.fullname }}</a>
     </footer>
+
+    {% if quote.tags %}
+    <p style="margin-top: 10px; font-size: 0.9rem;">
+        <strong>Теги:</strong>
+        {% for tag in quote.tags.all %}
+            <a href="{% url 'quotes:quotes_by_tag' tag.name %}" style="margin-right: 5px; text-decoration: underline;">
+                {{ tag.name }}
+            </a>
+        {% empty %}
+            <span style="color: gray;">Нет тегов</span>
+        {% endfor %}
+    </p>
+    {% endif %}
 </article>
 {% empty %}
 <p>Нет цитат.</p>
