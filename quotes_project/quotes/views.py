@@ -3,14 +3,19 @@ from django.contrib.auth.decorators import login_required
 from .models import Author, Quote, Tag
 from .forms import AuthorForm, QuoteForm
 from django.db.models import Count
+from django.core.paginator import Paginator
 
 
 def index(request):
     quotes = Quote.objects.all().order_by("author__fullname", "text")
 
+    paginator = Paginator(quotes, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     top_tags = Tag.objects.annotate(num_quotes= Count("quote")).order_by("-num_quotes")[:10]
 
-    return render(request, "quotes/index.html", {"quotes": quotes, "top_tags": top_tags})
+    return render(request, "quotes/index.html", {"page_obj": page_obj, "top_tags": top_tags})
 
 
 @login_required
