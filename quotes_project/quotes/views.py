@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 from .models import Author, Quote, Tag
 from .forms import AuthorForm, QuoteForm
 from django.db.models import Count
@@ -26,6 +26,7 @@ def add_author(request):
         form = AuthorForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Автор успешно добавлен!")
             return redirect("quotes:index")
     else:
         form = AuthorForm()
@@ -38,6 +39,7 @@ def add_quote(request):
         form = QuoteForm(request.POST)
         if form.is_valid():
             form.save(user=request.user)
+            messages.success(request, "Цитата успешно добавлена!")
             return redirect("quotes:index")
     else:
         form = QuoteForm()
@@ -58,5 +60,6 @@ def quotes_by_tag(request, tag_name):
 
 def run_scraper(request):
     if request.method == "POST":
-        scrape_quotes() 
+        scrape_quotes()
+        messages.success(request, "Скрапинг завершён и цитаты добавлены!")
     return redirect("quotes:index")

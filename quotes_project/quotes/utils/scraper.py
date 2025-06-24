@@ -39,4 +39,4 @@ def scrape_quotes():
         next_btn = soup.select_one(".next a")
         url = "http://quotes.toscrape.com" + next_btn["href"] if next_btn else None
 
-    print("Скрапинг завершён")
+

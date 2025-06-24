@@ -72,7 +72,24 @@
           {% endif %}
         </ul>
       </nav>
-
+      {% if messages %}
+      <div style="margin: 20px 0;">
+        {% for message in messages %}
+          <div
+            style="
+              padding: 10px;
+              background-color: #e0f7ff;
+              border-left: 4px solid #0d6efd;
+              color: #0d6efd;
+              margin-bottom: 10px;
+            "
+          >
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    
       {% block content %}{% endblock %}
     </main>
   </body>
