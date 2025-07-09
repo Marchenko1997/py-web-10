@@ -15,5 +15,9 @@
     {{ form.password }}
 
     <button type="submit" class="contrast">Войти</button>
+
+    <div class="small text-center" style="margin-top: 10px;">
+        <a href="{% url 'users:password_reset' %}"><i>Забыли пароль?</i></a>
+    </div>
 </form>
 {% endblock %}

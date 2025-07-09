@@ -1,8 +1,13 @@
+# users/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import RegisterForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+
+from .forms import RegisterForm, LoginForm
 
 
 def register_view(request):
@@ -10,7 +15,9 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Registration successful. You can now log in.")
+            messages.success(
+                request, "Регистрация прошла успешно. Теперь вы можете войти."
+            )
             return redirect("users:login")
     else:
         form = RegisterForm()
@@ -32,3 +39,13 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("quotes:index")
+
+
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = "users/password_reset.html"
+    subject_template_name = "users/password_reset_subject.txt"
+    email_template_name = "users/password_reset_email.html"
+    html_email_template_name = "users/password_reset_email.html"
+    success_url = reverse_lazy("users:password_reset_done")
+    success_message = "Письмо с инструкциями по сбросу пароля отправлено на %(email)s."
